@@ -35,8 +35,16 @@ public class Main {
             else
                 monthStr = month + "";
 
+            //Prevents "skipping" to the next year in December
+            double year = 0;
+            if(count == 0){
+                year = arr[count].get(0);
+            }else{
+                year = arr[count-1].get(0);
+            }
+
             //In order, adds year, adds month, sets day to 1 (for graphing program), and adds value
-            newArr.add(new String[]{""+arr[count-1].get(0), monthStr, "01",""+ total/((double)innerCount)}); //Adds avg
+            newArr.add(new String[]{""+year, monthStr, "01",""+ total/((double)innerCount)}); //Adds avg
             month = Integer.parseInt(String.valueOf(arr[count].get(1)));
             outerCount++;
         }
