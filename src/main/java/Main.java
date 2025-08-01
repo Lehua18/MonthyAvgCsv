@@ -1,5 +1,4 @@
 import com.opencsv.CSVWriter;
-
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
@@ -12,19 +11,20 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args){
-        File csvFile = uploadCsvFile();
+        File csvFile = new File("files", "Correct Overall Data with All months together.csv");
         assert csvFile != null;
         System.out.println(csvFile.getName());
         ArrayList<Double>[] arr = getValuesFromCsv(csvFile);
+//        System.out.println(arr[0].getFirst()+" "+arr[1].getFirst()+" "+arr[2].getFirst()+" "+arr[3].getFirst());
         List<String[]> newArr = new ArrayList<>();
-        int month = 1;
+        int month = 5;
         int count = 0; //counts place in arr
         int outerCount = 0; //counts number of loops
-        while(count< arr.length){
+        while(count< arr[0].size()){
             double total = 0;
             int innerCount= 0; //counts number of terms used
-            while(count<arr.length && arr[count].get(1) == month){
-                total+= arr[count].get(3);
+            while(count<arr[0].size() && arr[1].get(count) == month){
+                total+= arr[3].get(count);
                 count++;
                 innerCount++;
             }
@@ -38,14 +38,15 @@ public class Main {
             //Prevents "skipping" to the next year in December
             double year = 0;
             if(count == 0){
-                year = arr[count].get(0);
+                year = arr[0].get(count);
             }else{
-                year = arr[count-1].get(0);
+                year = arr[0].get(count-1);
             }
 
             //In order, adds year, adds month, sets day to 1 (for graphing program), and adds value
             newArr.add(new String[]{""+year, monthStr, "01",""+ total/((double)innerCount)}); //Adds avg
-            month = Integer.parseInt(String.valueOf(arr[count].get(1)));
+          //  System.out.println(arr[0].get(count)+" "+arr[1].get(count)+" "+arr[2].get(count)+" "+arr[3].get(count));
+            month = (int) Double.parseDouble(arr[1].get(count-1)+"");
             outerCount++;
         }
         try (CSVWriter writer = new CSVWriter(new FileWriter("monthlyAvgs.csv"))) {
@@ -101,6 +102,7 @@ public class Main {
             arr[1] = month;
             arr[2] = day;
             arr[3] = vals;
+
             return arr;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
