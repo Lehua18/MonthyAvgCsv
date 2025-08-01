@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+java {
+    sourceCompatibility = '24'
+    targetCompatibility = '24'
+
+}
+
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.opencsv:opencsv:5.12.0'
+    implementation 'org.apache.httpcomponents.client5:httpclient5:5.2.1'
+}
+
+application {
+    mainClass = 'Main'
+}
