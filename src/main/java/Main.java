@@ -12,7 +12,6 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args){
         File csvFile = new File("files", "Correct Overall Data with All months together.csv");
-        assert csvFile != null;
         System.out.println(csvFile.getName());
         ArrayList<Double>[] arr = getValuesFromCsv(csvFile);
 //        System.out.println(arr[0].getFirst()+" "+arr[1].getFirst()+" "+arr[2].getFirst()+" "+arr[3].getFirst());
@@ -46,7 +45,10 @@ public class Main {
             //In order, adds year, adds month, sets day to 1 (for graphing program), and adds value
             newArr.add(new String[]{""+year, monthStr, "01",""+ total/((double)innerCount)}); //Adds avg
           //  System.out.println(arr[0].get(count)+" "+arr[1].get(count)+" "+arr[2].get(count)+" "+arr[3].get(count));
-            month = (int) Double.parseDouble(arr[1].get(count-1)+"");
+            month++;
+            if (month > 12) {
+                month = 1;
+            }
             outerCount++;
         }
         try (CSVWriter writer = new CSVWriter(new FileWriter("monthlyAvgs.csv"))) {
